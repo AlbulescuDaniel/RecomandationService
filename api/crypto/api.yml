@@ -1,0 +1,91 @@
+getCryptoListOrderedByNormalization:
+  get:
+    summary:  Return a sorted list of all the cryptos, comparing the normalized range (max-min)/min
+    operationId: getCryptoListOrderedByNormalization
+    parameters:
+      - name: "start"
+        in: query
+        required: false
+        description: The start date for filtering. Default today - 1 month
+        schema:
+          type: string
+          format: date
+      - name: "end"
+        in: query
+        required: false
+        description: The end date for filtering. Default today
+        schema:
+          type: string
+          format: date
+      - name: "order"
+        in: query
+        required: false
+        description: Sorting order. Default DESC
+        schema:
+          $ref: "model.yml#/SortingOrder"
+    responses:
+      200:
+        description: Crypto list retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      400:
+        $ref: "../model.yml#/components/responses/badRequest"
+      404:
+        $ref: "../model.yml#/components/responses/notFound"
+      default:
+        $ref: "../model.yml#/components/responses/default"
+
+getHighestNormalizedCryptoByDate:
+  get:
+    summary: Return the crypto with the highest normalized range for a specific day
+    operationId: getHighestNormalizedCryptoByDate
+    parameters:
+      - name: "date"
+        in: query
+        required: true
+        description: Specific day to look for crypto
+        schema:
+          type: string
+          format: date
+    responses:
+      200:
+        description: Crypto retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: string
+      400:
+        $ref: "../model.yml#/components/responses/badRequest"
+      404:
+        $ref: "../model.yml#/components/responses/notFound"
+      default:
+        $ref: "../model.yml#/components/responses/default"
+
+getCryptoValuesBySymbol:
+  get:
+    summary: Return the oldest/newest/min/max values for a requested crypto
+    operationId: getCryptoValuesBySymbol
+    parameters:
+      - name: "symbol"
+        in: path
+        required: true
+        description: Crypto symbol
+        schema:
+          type: string
+    responses:
+      200:
+        description: Crypto information retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "model.yml#/CryptoValues"
+      400:
+        $ref: "../model.yml#/components/responses/badRequest"
+      404:
+        $ref: "../model.yml#/components/responses/notFound"
+      default:
+        $ref: "../model.yml#/components/responses/default"

@@ -1,0 +1,23 @@
+uploadCsv:
+  post:
+    summary: Upload a CSV with crypto values. (timestamp, symbol, price)
+    operationId: uploadCsv
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    responses:
+      201:
+        description: CSV uploaded successfully
+      400:
+        $ref: "../model.yml#/components/responses/badRequest"
+      404:
+        $ref: "../model.yml#/components/responses/notFound"
+      default:
+        $ref: "../model.yml#/components/responses/default"

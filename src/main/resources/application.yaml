@@ -1,0 +1,29 @@
+logging.level.org:
+    springframework: INFO
+
+# Assuming that we work with huge amount of data, a NoSql database who provides fast read and write operations was used
+spring:
+    cassandra:
+        local-datacenter: datacenter1
+        contact-points: 127.0.0.1
+        port: 9042
+        schema-action: create_if_not_exists
+        keyspace-name: test
+    cache:
+        cache-names:
+            - rate-limit-bucket #used for bucket4j IP rate limiting
+        caffeine:
+            spec: maximumSize=100000,expireAfterAccess=3600s
+
+# Rate limit all the requests by IP.
+# 50 requests per minute per IP.
+bucket4j:
+    enabled: true
+    filters:
+        - cache-key: getRemoteAddr()
+          cache-name: rate-limit-bucket
+          rate-limits:
+              - bandwidths:
+                    - capacity: 50
+                      time: 1
+                      unit: minutes

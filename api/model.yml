@@ -1,0 +1,36 @@
+components:
+  responses:
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    created:
+      description: Resource was created successfully
+      headers:
+    notFound:
+      description: Requested resource cannot be found found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    badRequest:
+      description: Request body missing or incomplete or incorrect or wrong parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+
+  schemas:
+    ApiError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

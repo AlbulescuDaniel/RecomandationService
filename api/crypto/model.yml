@@ -1,0 +1,24 @@
+SortingOrder:
+  type: string
+  enum:
+    - ASC
+    - DESC
+
+CryptoValues:
+  type: object
+  required:
+    - minPrice
+    - maxPrice
+    - oldest
+    - newest
+  properties:
+    minPrice:
+      type: double
+    maxPrice:
+      type: double
+    oldest:
+      type: string
+      format: date
+    newest:
+      type: string
+      format: date

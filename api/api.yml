@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Recommendation Service API
+paths:
+  ##################################################################################################
+  # CSV Uploader
+  ##################################################################################################
+
+  "/upload/csv":
+    $ref: "csv/api.yml#/uploadCsv"
+
+  ##################################################################################################
+  # Crypto
+  ##################################################################################################
+
+  "/crypto/normalize":
+    $ref: "crypto/api.yml#/getCryptoListOrderedByNormalization"
+
+  "/crypto/normalize/highest":
+    $ref: "crypto/api.yml#/getHighestNormalizedCryptoByDate"
+
+  "/crypto/info/{symbol}":
+    $ref: "crypto/api.yml#/getCryptoValuesBySymbol"
